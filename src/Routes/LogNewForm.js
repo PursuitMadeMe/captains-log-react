@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 function LogNewForm(){
     const [log, setLog] = useState({
         captainName: "",
@@ -10,9 +13,15 @@ function LogNewForm(){
         mistakesWereMadeToday: false,
         daysSinceLastCrisis: 0,
     });
+    
     const navigate = useNavigate();
     
-    const API_URL = process.env.REACT_APP_API_URL;
+
+    const addLog = () => {
+      axios.post(`${API_URL}/logs`, log)
+        .then((res) => {navigate(`/logs`)}) 
+        .catch(error => console.error(error)) 
+    };
 
     const handleTextChange = (e) => {
         setLog({ ...log, [e.target.id]: e.target.value });
@@ -23,14 +32,7 @@ function LogNewForm(){
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post(`${API_URL}/logs`, log)
-        .then((res) => {
-          navigate("/logs");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+       addLog();
     };
     return (
         <div className="New">

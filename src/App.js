@@ -14,8 +14,8 @@ import NavBar from "./Components/NavBar";
 
 function App() {
   return (
-    <Router>
     <div className="App">
+    <Router>
       <NavBar />
       <main>
         <Routes>
@@ -27,8 +27,8 @@ function App() {
           <Route path="*" element={<FourOFour />} />
         </Routes>
       </main>
-    </div>
     </Router>
+    </div>
   )
 }
 

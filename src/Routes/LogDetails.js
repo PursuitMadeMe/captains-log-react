@@ -5,28 +5,21 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_API_URL;
 
 function LogDetails(){
-    const [log, setLog] = useState([]);
+    const [log, setLog] = useState({});
     let { index } = useParams();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(`${API_URL}/logs/${index}`)
-        .then((res) => {
-            setLog(res.data);
-        })
-        .catch(() => {
-            navigate("/not-found");
+        .then((res) => {setLog(res.data)})
+        .catch(() => {navigate("/not-found");
         });
     }, [index, navigate]);
 
     const handleDelete = () => {
         axios.delete(`${API_URL}/logs/${index}`)
-        .then((res) => {
-            navigate("/logs");
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+        .then((res) => {navigate("/logs")})
+        .catch((err) => {console.log(err) });
     };
     return ( 
         <article>
